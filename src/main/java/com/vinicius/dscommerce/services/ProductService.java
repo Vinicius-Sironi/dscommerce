@@ -1,7 +1,5 @@
 package com.vinicius.dscommerce.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +29,15 @@ public class ProductService {
 		return new ProductDTO(repository.findById(id).get());
 	}
 	
+	@Transactional
+	public ProductDTO insert(ProductDTO dto) {
+		Product entity = new Product();
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setPrice(dto.getPrice());
+		entity.setImgUrl(dto.getImgUrl());
+		
+		entity = repository.save(entity);
+		return new ProductDTO(entity);
+	}
 }

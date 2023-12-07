@@ -12,7 +12,7 @@ public class ProductDTO {
 	
 	public ProductDTO() {
 	}
-
+	
 	public ProductDTO(Product product) {
 		id = product.getId();
 		name = product.getName();

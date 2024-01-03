@@ -1,4 +1,4 @@
-package com.vinicius.dscommerce.entities.DTOs;
+package com.vinicius.dscommerce.entities.DTOs.copy2;
 
 import java.time.Instant;
 

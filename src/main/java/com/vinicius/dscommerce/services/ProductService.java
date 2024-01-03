@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vinicius.dscommerce.DTOs.ProductDTO;
+import com.vinicius.dscommerce.DTOs.ProductMinDTO;
 import com.vinicius.dscommerce.entities.Product;
-import com.vinicius.dscommerce.entities.DTOs.ProductDTO;
+import com.vinicius.dscommerce.projections.ProductProjection;
 import com.vinicius.dscommerce.repositories.ProductRepository;
 import com.vinicius.dscommerce.services.exceptions.DatabaseException;
 import com.vinicius.dscommerce.services.exceptions.ResourceNotFoundException;
@@ -24,7 +26,7 @@ public class ProductService {
 	@Autowired
 	ProductRepository repository;
 	
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true) //Importante evita o lock de escrita
 	public Page<ProductDTO> findAll(Pageable pageaple) {
 		Page<Product> result = repository.findAll(pageaple);
 		return result.map(x -> new ProductDTO(x));
@@ -33,6 +35,17 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ProductDTO findById(Long id) {
 		return new ProductDTO(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado")));
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<ProductMinDTO> searchByProductName(String name, Pageable pageable) {
+		try {
+			Page<ProductProjection> list = repository.searchByProductName(name, pageable);
+			Page<ProductMinDTO> dto = list.map(x -> new ProductMinDTO(x));
+			return dto;
+		} catch (Exception e) {
+			throw new ResourceNotFoundException("Produto não encontrado");
+		}
 	}
 	
 	@Transactional

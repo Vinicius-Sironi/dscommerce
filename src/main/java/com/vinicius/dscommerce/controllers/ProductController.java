@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.vinicius.dscommerce.entities.DTOs.ProductDTO;
+import com.vinicius.dscommerce.DTOs.ProductDTO;
+import com.vinicius.dscommerce.DTOs.ProductMinDTO;
 import com.vinicius.dscommerce.services.ProductService;
 
 import jakarta.validation.Valid;
@@ -28,15 +30,20 @@ public class ProductController {
 	@Autowired
 	ProductService service;
 	
-	@GetMapping
+	/*@GetMapping
 	public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageaple) {
 		return ResponseEntity.ok().body(service.findAll(pageaple));
 	}
-	
+	*/
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
 		ProductDTO entity = service.findById(id);
 		return ResponseEntity.ok().body(entity);
+	}
+	
+	@GetMapping
+	public ResponseEntity<Page<ProductMinDTO>> findByProductName(@RequestParam(name = "name", defaultValue = "") String name, Pageable pageaple) {
+		return ResponseEntity.ok().body(service.searchByProductName(name, pageaple));
 	}
 	
 	@PostMapping

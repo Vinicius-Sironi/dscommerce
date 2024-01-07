@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vinicius.dscommerce.DTOs.CategoryDTO;
 import com.vinicius.dscommerce.DTOs.ProductDTO;
 import com.vinicius.dscommerce.DTOs.ProductMinDTO;
+import com.vinicius.dscommerce.entities.Category;
 import com.vinicius.dscommerce.entities.Product;
 import com.vinicius.dscommerce.projections.ProductProjection;
 import com.vinicius.dscommerce.repositories.ProductRepository;
@@ -71,6 +73,12 @@ public class ProductService {
 		entity.setDescription(dto.getDescription());
 		entity.setPrice(dto.getPrice());
 		entity.setImgUrl(dto.getImgUrl());
+		entity.getCategoryes().clear();
+		for(CategoryDTO x : dto.getCategories()) {
+			Category cat = new Category();
+			cat.setId(x.getId());
+			entity.getCategoryes().add(cat);
+		}
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")

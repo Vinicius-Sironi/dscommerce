@@ -13,7 +13,7 @@ import com.vinicius.dscommerce.projections.ProductProjection;
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	
 	@Query(nativeQuery = true, value = 
-			  "SELECT name, price, img_url AS imgUrl "
+			  "SELECT id, name, price, img_url AS imgUrl "
 			+ "FROM tb_product "
 			+ "WHERE LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')) "
 			+ "ORDER BY name ASC")

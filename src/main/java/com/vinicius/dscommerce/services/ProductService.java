@@ -27,12 +27,6 @@ public class ProductService {
 	@Autowired
 	ProductRepository repository;
 	
-	@Transactional(readOnly = true) //Importante evita o lock de escrita
-	public Page<ProductDTO> findAll(Pageable pageaple) {
-		Page<Product> result = repository.findAll(pageaple);
-		return result.map(x -> new ProductDTO(x));
-	}
-	
 	@Transactional(readOnly = true)
 	public ProductDTO findById(Long id) {
 		return new ProductDTO(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado")));

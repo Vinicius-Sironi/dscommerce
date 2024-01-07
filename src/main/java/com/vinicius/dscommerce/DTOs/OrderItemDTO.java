@@ -8,6 +8,7 @@ public class OrderItemDTO {
 	private String name;
 	private Double price;
 	private Integer quantity;
+	private String imgUrl;
 	
 	public OrderItemDTO() {
 	}
@@ -17,6 +18,7 @@ public class OrderItemDTO {
 		name = entity.getProduct().getName();
 		price = entity.getPrice();
 		quantity = entity.getQuantity();
+		imgUrl = entity.getProduct().getImgUrl();
 	}
 
 	public Long getProductId() {
@@ -35,6 +37,10 @@ public class OrderItemDTO {
 		return quantity;
 	}
 	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
 	public double getSubTotal() {
 		return price * quantity;
 	}

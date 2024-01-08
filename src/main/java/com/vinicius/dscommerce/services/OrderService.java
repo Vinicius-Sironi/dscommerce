@@ -33,12 +33,17 @@ public class OrderService {
 	private OrderItemRepository orderItemRepository;
 	
 	@Autowired
+	private AuthService authService;
+	
+	@Autowired
 	private UserService userService;
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
 	@Transactional(readOnly = true)
 	public OrderDTO findById(Long id) {
-		return new OrderDTO(repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Compra não encontrada")));
+		Order order = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Compra não encontrada"));
+		authService.validateSelfOrAdmin(order.getClient().getId());
+		return new OrderDTO(order);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_CLIENT')")

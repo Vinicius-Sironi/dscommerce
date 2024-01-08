@@ -1,5 +1,5 @@
 # DS Commerce
-![](https://img.shields.io/github/license/Vinicius-Sironi/dscommerce)
+![GitHub License](https://img.shields.io/github/license/Vinicius-Sironi/dscommerce?link=https%3A%2F%2Fgithub.com%2FVinicius-Sironi%2Fdscommerce%2Fblob%2Fmain%2FLICENSE)
 # Sobre o projeto
 DS Commerce é uma aplicação Back-End que foi feita ao longo das aulas do curso do Prof. Nélio Alves, "Java Spring Professional".
 
